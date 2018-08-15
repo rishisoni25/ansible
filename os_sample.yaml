@@ -1,0 +1,17 @@
+---
+- hosts: prod dev
+  order: reverse_sorted
+  remote_user: root
+  tasks:
+   - name: to get OS version
+     raw: cat /etc/issue || cat /root/rishi.txt
+     register: prin
+   - debug: msg="{{prin}}"
+- hosts: all
+  remote_user: root
+  tasks:
+   - name: to get OS version
+     raw: cat /etc/issue
+     ignore_errors: True
+     register: prin
+   - debug: msg="{{prin}}"
